@@ -107,5 +107,6 @@
   };
 
   require.brunch = true;
+  require._cache = cache;
   globals.require = require;
 })();
