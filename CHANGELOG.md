@@ -1,3 +1,6 @@
+# commonjs-require-definition 0.2.1 (18 Oct 2015)
+* Now exposing `require._cache` for testing / mocking purposes.
+
 # commonjs-require-definition 0.2.0 (7 April 2015)
 * Added component(1) support.
 * Improved minifier compatibility.
