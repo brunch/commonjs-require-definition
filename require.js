@@ -53,7 +53,7 @@
   var localRequire = function(path) {
     return function expanded(name) {
       var absolute = expand(dirname(path), name);
-      return require(absolute, path);
+      return globals.require(absolute, path);
     };
   };
 
