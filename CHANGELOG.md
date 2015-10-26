@@ -1,3 +1,6 @@
+# commonjs-require-definition 0.2.2 (27 Oct 2015)
+* Small fix for mocking.
+
 # commonjs-require-definition 0.2.1 (18 Oct 2015)
 * Now exposing `require._cache` for testing / mocking purposes.
 
