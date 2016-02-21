@@ -48,9 +48,8 @@
   };
 
   var require = function(name, loaderPath) {
-    var path = expand(name, '.');
     if (loaderPath == null) loaderPath = '/';
-    path = unalias(name, loaderPath);
+    var path = unalias(name, loaderPath);
 
     if (has.call(cache, path)) return cache[path].exports;
     if (has.call(modules, path)) return initModule(path, modules[path]);
@@ -59,7 +58,7 @@
     if (has.call(cache, dirIndex)) return cache[dirIndex].exports;
     if (has.call(modules, dirIndex)) return initModule(dirIndex, modules[dirIndex]);
 
-    throw new Error('Cannot find module "' + name + '" from '+ '"' + loaderPath + '"');
+    throw new Error('Cannot find module "' + name + '" from ' + '"' + loaderPath + '"');
   };
 
   require.alias = function(from, to) {
