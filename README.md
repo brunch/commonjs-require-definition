@@ -8,7 +8,7 @@ Include on top of your file and register modules with `require.register(name, fn
 
 
 ```html
-<script src="commonjs-require.js"></script>
+<script src="require.js"></script>
 <script>
 require.register("module", function(exports, require, module) {
   // Expose `count` externally.
