@@ -1,3 +1,6 @@
+# commonjs-require-definition 0.3.0 (Feb 22, 2015)
+* Removed component(1) support.
+
 # commonjs-require-definition 0.2.2 (27 Oct 2015)
 * Small fix for mocking.
 
