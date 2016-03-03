@@ -8,13 +8,11 @@
   var cache = {};
   var aliases = {};
   var has = ({}).hasOwnProperty;
-  var extExp = /\.[^.\/]+$/
-  var indexExp = /\/index(\.[^\/]+)?$/
 
-  var _reg = /^\.\.?(\/|$)/;
+  var expRe = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
     var results = [], part;
-    var parts = (_reg.test(name) ? root + '/' + name : name).split('/');
+    var parts = (expRe.test(name) ? root + '/' + name : name).split('/');
     for (var i = 0, length = parts.length; i < length; i++) {
       part = parts[i];
       if (part === '..') {
@@ -58,6 +56,25 @@
     aliases[to] = from;
   };
 
+  var extRe = /\.[^.\/]+$/;
+  var indexRe = /\/index(\.[^\/]+)?$/;
+  var addExtensions = function(bundle) {
+    var alias = bundle;
+    while (extExp.test(alias)) {
+      alias = alias.replace(extExp, '');
+      if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index') {
+        aliases[alias] = bundle;
+      }
+    }
+
+    if (indexRe.test(bundle)) {
+      var iAlias = bundle.replace(indexRe, '');
+      if (!has.call(aliases, iAlias)) {
+        aliases[iAlias] = bundle;
+      }
+    }
+  };
+
   require.register = require.define = function(bundle, fn) {
     if (typeof bundle === 'object') {
       for (var key in bundle) {
@@ -67,21 +84,7 @@
       }
     } else {
       modules[bundle] = fn;
-
-      var alias = bundle;
-      while (extExp.test(alias)) {
-        alias = alias.replace(extExp, '');
-        if (!has.call(aliases, alias) || aliases[alias].replace(extExp, '') === alias + '/index') {
-          aliases[alias] = bundle;
-        }
-      }
-
-      if (indexExp.test(bundle)) {
-        alias = bundle.replace(indexExp, '');
-        if (!has.call(aliases, alias)) {
-          aliases[alias] = bundle;
-        }
-      }
+      addExtensions(bundle);
     }
   };
 
