@@ -8,11 +8,8 @@
   var cache = {};
   var aliases = {};
   var has = ({}).hasOwnProperty;
-
-  var unalias = function(alias, loaderPath) {
-    var result = aliases[alias] || aliases[alias + '/index.js'];
-    return result || alias;
-  };
+  var extExp = /\.[^.\/]+$/
+  var indexExp = /\/index(\.[^\/]+)?$/
 
   var _reg = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
@@ -49,14 +46,10 @@
 
   var require = function(name, loaderPath) {
     if (loaderPath == null) loaderPath = '/';
-    var path = unalias(name, loaderPath);
+    var path = aliases[name] || name;
 
     if (has.call(cache, path)) return cache[path].exports;
     if (has.call(modules, path)) return initModule(path, modules[path]);
-
-    var dirIndex = expand(path, './index');
-    if (has.call(cache, dirIndex)) return cache[dirIndex].exports;
-    if (has.call(modules, dirIndex)) return initModule(dirIndex, modules[dirIndex]);
 
     throw new Error('Cannot find module "' + name + '" from ' + '"' + loaderPath + '"');
   };
@@ -74,6 +67,21 @@
       }
     } else {
       modules[bundle] = fn;
+
+      var alias = bundle;
+      while (extExp.test(alias)) {
+        alias = alias.replace(extExp, '');
+        if (!has.call(aliases, alias) || aliases[alias].replace(extExp, '') === alias + '/index') {
+          aliases[alias] = bundle;
+        }
+      }
+
+      if (indexExp.test(bundle)) {
+        alias = bundle.replace(indexExp, '');
+        if (!has.call(aliases, alias)) {
+          aliases[alias] = bundle;
+        }
+      }
     }
   };
 
