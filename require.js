@@ -60,8 +60,8 @@
   var indexRe = /\/index(\.[^\/]+)?$/;
   var addExtensions = function(bundle) {
     var alias = bundle;
-    while (extExp.test(alias)) {
-      alias = alias.replace(extExp, '');
+    while (extRe.test(alias)) {
+      alias = alias.replace(extRe, '');
       if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index') {
         aliases[alias] = bundle;
       }
