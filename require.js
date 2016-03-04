@@ -42,9 +42,13 @@
     return module.exports;
   };
 
+  var expandAlias = function(name) {
+    return aliases[name] ? expandAlias(aliases[name]) : name;
+  };
+
   var require = function(name, loaderPath) {
     if (loaderPath == null) loaderPath = '/';
-    var path = aliases[name] || name;
+    var path = expandAlias(name);
 
     if (has.call(cache, path)) return cache[path].exports;
     if (has.call(modules, path)) return initModule(path, modules[path]);
