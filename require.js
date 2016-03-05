@@ -60,6 +60,12 @@
     aliases[to] = from;
   };
 
+  require.reset = function() {
+    modules = {};
+    cache = {};
+    aliases = {};
+  };
+
   var extRe = /\.[^.\/]+$/;
   var indexRe = /\/index(\.[^\/]+)?$/;
   var addExtensions = function(bundle) {
@@ -88,6 +94,7 @@
       }
     } else {
       modules[bundle] = fn;
+      delete cache[bundle];
       addExtensions(bundle);
     }
   };
