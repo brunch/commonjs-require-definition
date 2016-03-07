@@ -1,3 +1,11 @@
+# commonjs-require-definition 0.4.1 (Mar 7. 2016)
+* `require.reset()` to reset all registered modules
+
+# commonjs-require-definition 0.4.0 (Mar 4, 2016)
+* Handle registers with file extensions, create extension-less aliases.
+  For example, registering `app/something.js` will also create an alias `app/something`.
+  In case of multiple extensions, several aliases will be created — `app/menu.tmpl.hbs` will create aliases `app/menu.tmpl` and `app/menu`.
+
 # commonjs-require-definition 0.3.0 (Feb 22, 2015)
 * Removed component(1) support.
 
