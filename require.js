@@ -69,10 +69,9 @@
   var extRe = /\.[^.\/]+$/;
   var indexRe = /\/index(\.[^\/]+)?$/;
   var addExtensions = function(bundle) {
-    var alias = bundle;
-    while (extRe.test(alias)) {
-      alias = alias.replace(extRe, '');
-      if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index' || bundle === alias + '.js') {
+    if (extRe.test(bundle)) {
+      var alias = bundle.replace(extRe, '');
+      if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index') {
         aliases[alias] = bundle;
       }
     }
