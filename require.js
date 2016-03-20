@@ -53,7 +53,7 @@
     if (has.call(cache, path)) return cache[path].exports;
     if (has.call(modules, path)) return initModule(path, modules[path]);
 
-    throw new Error('Cannot find module "' + name + '" from ' + '"' + loaderPath + '"');
+    throw new Error("Cannot find module '" + name + "' from '" + loaderPath + "'");
   };
 
   require.alias = function(from, to) {
