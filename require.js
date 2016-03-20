@@ -99,16 +99,16 @@
   };
 
   require.list = function() {
-    var result = [];
+    var list = [];
     for (var item in modules) {
       if (has.call(modules, item)) {
-        result.push(item);
+        list.push(item);
       }
     }
-    return result;
+    return list;
   };
 
-  require.brunch = true;
   require._cache = cache;
+  require.brunch = true;
   globals.require = require;
 })();
