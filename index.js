@@ -1,4 +1,7 @@
-var fs = require('fs');
-var sysPath = require('path');
+const fs = require('fs');
+const sysPath = require('path');
 
-module.exports = fs.readFileSync(sysPath.join(__dirname, 'require.js'), 'utf8');
+const readFile = name => fs.readFileSync(sysPath.join(__dirname, name), 'utf8');
+const requireJs = readFile('require.js');
+
+module.exports = requireJs;
