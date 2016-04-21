@@ -47,6 +47,7 @@
   var expandAlias = function(name) {
     return aliases[name] ? expandAlias(aliases[name]) : name;
   };
+
   var _resolve = function(name, dep) {
     return expandAlias(expand(dirname(name), dep));
   };
@@ -83,9 +84,6 @@
     }
   };
 
-  var hmr = globals._hmr && new globals._hmr(_resolve, require, modules, cache);
-  require.hmr = hmr && hmr.wrap;
-
   require.register = require.define = function(bundle, fn) {
     if (typeof bundle === 'object') {
       for (var key in bundle) {
@@ -110,7 +108,9 @@
     return list;
   };
 
+  var hmr = globals._hmr && new globals._hmr(_resolve, require, modules, cache);
   require._cache = cache;
+  require.hmr = hmr && hmr.wrap;
   require.brunch = true;
   globals.require = require;
 })();
