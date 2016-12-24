@@ -1,26 +1,25 @@
 (function() {
   'use strict';
 
-  var globals = typeof window === 'undefined' ? global : window;
+  var globals = new Function('return this')();
   if (typeof globals.require === 'function') return;
 
   var modules = {};
   var cache = {};
   var aliases = {};
-  var has = ({}).hasOwnProperty;
+  var has = {}.hasOwnProperty;
 
   var expRe = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
-    var results = [], part;
+    var results = [];
     var parts = (expRe.test(name) ? root + '/' + name : name).split('/');
-    for (var i = 0, length = parts.length; i < length; i++) {
-      part = parts[i];
+    parts.forEach(function(part) {
       if (part === '..') {
         results.pop();
       } else if (part !== '.' && part !== '') {
         results.push(part);
       }
-    }
+    });
     return results.join('/');
   };
 
@@ -36,8 +35,7 @@
   };
 
   var initModule = function(name, definition) {
-    var hot = null;
-    hot = hmr && hmr.createHot(name);
+    var hot = hmr && hmr.createHot(name);
     var module = {id: name, exports: {}, hot: hot};
     cache[name] = module;
     definition(module.exports, localRequire(name), module);
@@ -85,12 +83,10 @@
   };
 
   require.register = require.define = function(bundle, fn) {
-    if (typeof bundle === 'object') {
-      for (var key in bundle) {
-        if (has.call(bundle, key)) {
-          require.register(key, bundle[key]);
-        }
-      }
+    if (bundle && typeof bundle === 'object') {
+      Object.keys(bundle).forEach(function(key) {
+        require.register(key, bundle[key]);
+      });
     } else {
       modules[bundle] = fn;
       delete cache[bundle];
@@ -99,13 +95,7 @@
   };
 
   require.list = function() {
-    var list = [];
-    for (var item in modules) {
-      if (has.call(modules, item)) {
-        list.push(item);
-      }
-    }
-    return list;
+    return Object.keys(modules);
   };
 
   var hmr = globals._hmr && new globals._hmr(_resolve, require, modules, cache);
