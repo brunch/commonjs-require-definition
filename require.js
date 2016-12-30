@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var globals = new Function('return this')();
+  var globals = typeof global === 'undefined' ? self : global;
   if (typeof globals.require === 'function') return;
 
   var modules = {};
