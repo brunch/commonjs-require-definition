@@ -1,4 +1,3 @@
 const readFile = require('fs').readFileSync;
-const join = require('path').join;
 
-module.exports = readFile(join(__dirname, 'require.js'), 'utf8');
+module.exports = readFile('require.js', 'utf8');
