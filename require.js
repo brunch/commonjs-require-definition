@@ -3,7 +3,6 @@
 
   if (typeof require === 'function') return;
 
-  var has = {}.hasOwnProperty;
   var modules = Object.create(null);
   var cache = Object.create(null);
   var aliases = Object.create(null);
@@ -42,7 +41,7 @@
   };
 
   var expandAlias = function(name) {
-    return aliases[name] ? expandAlias(aliases[name]) : name;
+    return name in aliases ? expandAlias(aliases[name]) : name;
   };
 
   var _resolve = function(name, dep) {
@@ -53,8 +52,8 @@
     if (loaderPath == null) loaderPath = '/';
     var path = expandAlias(name);
 
-    if (has.call(cache, path)) return cache[path].exports;
-    if (has.call(modules, path)) return initModule(path, modules[path]);
+    if (path in cache) return cache[path].exports;
+    if (path in modules) return initModule(path, modules[path]);
 
     throw new Error("Cannot find module '" + name + "' from '" + loaderPath + "'");
   };
@@ -68,14 +67,14 @@
   var addExtensions = function(bundle) {
     if (extRe.test(bundle)) {
       var alias = bundle.replace(extRe, '');
-      if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index') {
+      if (!(alias in aliases) || aliases[alias].replace(extRe, '') === alias + '/index') {
         aliases[alias] = bundle;
       }
     }
 
     if (indexRe.test(bundle)) {
       var iAlias = bundle.replace(indexRe, '');
-      if (!has.call(aliases, iAlias)) {
+      if (!(iAlias in aliases)) {
         aliases[iAlias] = bundle;
       }
     }
