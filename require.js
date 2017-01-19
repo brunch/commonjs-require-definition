@@ -1,8 +1,7 @@
 (function() {
   'use strict';
 
-  var globals = typeof global === 'undefined' ? self : global;
-  if (typeof globals.require === 'function') return;
+  if (typeof require === 'function') return;
 
   var has = {}.hasOwnProperty;
   var modules = Object.create(null);
@@ -30,7 +29,7 @@
   var localRequire = function(path) {
     return function expanded(name) {
       var absolute = expand(dirname(path), name);
-      return globals.require(absolute, path);
+      return require(absolute, path);
     };
   };
 
@@ -102,5 +101,7 @@
   require._cache = cache;
   require.hmr = hmr && hmr.wrap;
   require.brunch = true;
+
+  var globals = typeof global === 'undefined' ? self : global;
   globals.require = require;
 })();
