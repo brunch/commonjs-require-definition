@@ -4,10 +4,10 @@
   var globals = typeof global === 'undefined' ? self : global;
   if (typeof globals.require === 'function') return;
 
-  var modules = {};
-  var cache = {};
-  var aliases = {};
   var has = {}.hasOwnProperty;
+  var modules = Object.create(null);
+  var cache = Object.create(null);
+  var aliases = Object.create(null);
 
   var expRe = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
