@@ -83,7 +83,7 @@
   };
 
   require.register = require.define = function(bundle, fn) {
-    if (bundle && typeof bundle === 'object') {
+    if (bundle === Object(bundle)) {
       Object.keys(bundle).forEach(function(key) {
         require.register(key, bundle[key]);
       });
