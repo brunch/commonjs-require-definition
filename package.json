@@ -1,6 +1,6 @@
 {
   "name": "commonjs-require-definition",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Simple common.js `require()` definition.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
