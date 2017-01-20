@@ -11,15 +11,16 @@
 
   var expRe = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
-    var results = [];
+    var results = [], part;
     var parts = (expRe.test(name) ? root + '/' + name : name).split('/');
-    parts.forEach(function(part) {
+    for (var i = 0, length = parts.length; i < length; i++) {
+      part = parts[i];
       if (part === '..') {
         results.pop();
       } else if (part !== '.' && part !== '') {
         results.push(part);
       }
-    });
+    }
     return results.join('/');
   };
 
@@ -84,9 +85,11 @@
 
   require.register = require.define = function(bundle, fn) {
     if (bundle && typeof bundle === 'object') {
-      Object.keys(bundle).forEach(function(key) {
-        require.register(key, bundle[key]);
-      });
+      for (var key in bundle) {
+        if (has.call(bundle, key)) {
+          require.register(key, bundle[key]);
+        }
+      }
     } else {
       modules[bundle] = fn;
       delete cache[bundle];
@@ -95,7 +98,13 @@
   };
 
   require.list = function() {
-    return Object.keys(modules);
+    var list = [];
+    for (var item in modules) {
+      if (has.call(modules, item)) {
+        list.push(item);
+      }
+    }
+    return list;
   };
 
   var hmr = globals._hmr && new globals._hmr(_resolve, require, modules, cache);
