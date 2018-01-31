@@ -53,7 +53,7 @@
 
   var require = function(name, loaderPath) {
     if (loaderPath == null) loaderPath = '/';
-    var path = expandAlias(name);
+    var path = expandAlias(name.toLowerCase());
 
     if (has.call(cache, path)) return cache[path].exports;
     if (has.call(modules, path)) return initModule(path, modules[path]);
@@ -62,7 +62,7 @@
   };
 
   require.alias = function(from, to) {
-    aliases[to] = from;
+    aliases[to.toLowerCase()] = from.toLowerCase();
   };
 
   var extRe = /\.[^.\/]+$/;
@@ -91,6 +91,7 @@
         }
       }
     } else {
+      bundle = bundle.toLowerCase();
       modules[bundle] = fn;
       delete cache[bundle];
       addExtensions(bundle);
