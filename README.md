@@ -17,7 +17,7 @@ Include on top of your file and register modules with `require.register(name, fn
     // Expose `count` externally.
     exports.count = 42;
   });
-console.log(require("module").count);
+  console.log(require("module").count);
 </script>
 ```
 
