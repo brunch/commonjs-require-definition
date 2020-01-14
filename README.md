@@ -13,10 +13,10 @@ Include on top of your file and register modules with `require.register(name, fn
 ```html
 <script src="require.js"></script>
 <script>
-require.register("module", (exports, require, module) => {
-  // Expose `count` externally.
-  exports.count = 42;
-});
+  require.register("module", (exports, require, module) => {
+    // Expose `count` externally.
+    exports.count = 42;
+  });
 console.log(require("module").count);
 </script>
 ```
