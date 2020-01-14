@@ -25,4 +25,4 @@ Include on top of your file and register modules with `require.register(name, fn
 
 The MIT License (MIT)
 
-Copyright (c) 2020 Paul Miller (https://paulmillr.com/)
+Copyright (c) 2020 Paul Miller https://paulmillr.com/
