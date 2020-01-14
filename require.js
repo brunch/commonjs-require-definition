@@ -44,7 +44,7 @@
   };
 
   var expandAlias = function(name) {
-    return aliases[name] ? expandAlias(aliases[name]) : name;
+    return (aliases[name] && name !== aliases[name]) ? expandAlias(aliases[name]) : name;
   };
 
   var _resolve = function(name, dep) {
